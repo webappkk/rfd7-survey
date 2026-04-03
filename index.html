@@ -4,24 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO Meta Tags -->
     <title>แบบฟอร์มตอบรับการเข้าร่วมประชุม</title>
     <meta name="description" content="แบบฟอร์มตอบรับการเข้าร่วมประชุม">
     <meta name="keywords" content="แบบฟอร์มตอบรับการเข้าร่วมประชุม, ป่าไม้, ทรัพยากรป่าไม้">
     <meta name="author" content="แบบฟอร์มตอบรับการเข้าร่วมประชุม7">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="แบบฟอร์มตอบรับการเข้าร่วมประชุม">
     <meta property="og:description" content="แบบฟอร์มตอบรับการเข้าร่วมประชุม">
 
-<!-- Favicon แบบฟอร์ม -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📝</text></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📝</text></svg>">
     <meta name="theme-color" content="#16a34a">
 
     <style>
-        /* ✅ รีเซ็ตทุก margin/padding และกำหนด height เต็มจอ */
+        /* รีเซ็ตทุก margin/padding และกำหนด height เต็มจอ */
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -32,21 +29,52 @@
             width: 100%;
             height: 100%;
             overflow: hidden; /* ป้องกัน scrollbar ซ้อน */
+            font-family: 'Sarabun', Tahoma, sans-serif; /* เพิ่มฟอนต์ให้อ่านง่าย */
         }
 
-        /* ✅ iframe เต็มจอสมบูรณ์ */
+        /* iframe เต็มจอสมบูรณ์ */
         #main-frame {
-            position: fixed;  /* fixed ดีกว่า absolute — ไม่ขยับตาม scroll */
+            position: fixed; 
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border: none;
-            display: block;
+            display: none; /* ซ่อนไว้ก่อน ให้ JS ตัดสินใจ */
+        }
+
+        /* สไตล์สำหรับหน้าจอแจ้งเตือนปิดรับคำตอบ */
+        #closed-message {
+            display: none; /* ซ่อนไว้ก่อน ให้ JS ตัดสินใจ */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3f4f6;
+            color: #374151;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #closed-message h1 {
+            color: #dc2626; /* สีแดงแจ้งเตือน */
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        #closed-message p {
+            font-size: 16px;
+            color: #4b5563;
         }
     </style>
 </head>
 <body>
+
+    <div id="closed-message">
+        <h1>ปิดรับการตอบกลับแล้ว</h1>
+        <p>ขออภัย ขณะนี้แบบฟอร์มตอบรับการเข้าร่วมประชุมได้ปิดรับคำตอบแล้ว<br>ขอบคุณที่ให้ความสนใจ</p>
+    </div>
+
     <iframe
         id="main-frame"
         src="https://script.google.com/macros/s/AKfycbx1ojsienmTYbUKjRJmslIrp7fJ4Z4h1yKjI5n4evhhKGg0Kt4W4vfOycE7m3y5bwS1Pg/exec"
@@ -54,6 +82,30 @@
         loading="eager"
         title="แบบฟอร์มตอบรับการเข้าร่วมประชุม - สำนักจัดการทรัพยากรป่าไม้ที่ 7"
     ></iframe>
+
+    <script>
+        // ==========================================
+        // ⚙️ ตั้งค่าการเปิด-ปิดฟอร์มตรงนี้
+        // ==========================================
+        // เปลี่ยนเป็น true  ถ้าต้องการ "เปิด" ให้คนกรอก
+        // เปลี่ยนเป็น false ถ้าต้องการ "ปิด" และแสดงข้อความแจ้งเตือน
+        
+        const isFormOpen = false; 
+        
+        // ==========================================
+
+        window.onload = function() {
+            const iframe = document.getElementById('main-frame');
+            const closedMsg = document.getElementById('closed-message');
+
+            if (isFormOpen) {
+                iframe.style.display = 'block';
+                closedMsg.style.display = 'none';
+            } else {
+                iframe.style.display = 'none';
+                closedMsg.style.display = 'flex';
+            }
+        };
+    </script>
 </body>
 </html>
-
